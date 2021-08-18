@@ -1,1 +1,5 @@
-export type Alignment = 'Good' | 'Neutral' | 'Evil';
+export enum Alignment {
+  GOOD = 'Good',
+  NEUTRAL = 'Neutral',
+  EVIL = 'Evil',
+}

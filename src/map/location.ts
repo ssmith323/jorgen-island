@@ -1,3 +1,7 @@
+import Beach from './beach';
+import CoastLine from './coast-line';
+import DeepOcean from './deep-ocean';
+import Water from './water';
 import { Places, worldMap } from './world';
 
 export default class Location {
@@ -7,6 +11,7 @@ export default class Location {
     this.x = 5;
     this.y = 5;
   }
+
   move(direction: CardinalDirections): CurrentLocation {
     switch (direction) {
       case 'NORTH':
@@ -25,28 +30,34 @@ export default class Location {
     return [this.x, this.y];
   }
 
-  event(): void {
-    let terrian: Places;
-    try {
-      terrian = worldMap[this.x][this.y];
-    } catch (e) {
-      terrian = Places.DEEP_OCEAN;
+  getTerrian(): Places {
+    if (
+      this.x < 0 ||
+      this.x > worldMap.length ||
+      this.y < 0 ||
+      this.y > worldMap.length
+    ) {
+      return Places.DEEP_OCEAN;
     }
+
+    return worldMap[this.x][this.y];
+  }
+
+  event(): void {
+    const terrian: Places = this.getTerrian();
 
     switch (terrian) {
       case Places.WATER:
-        console.log('Careful now. You are in the ocean. You could get lost.');
+        new Water().randomEvent();
         break;
       case Places.COAST_LINE:
-        console.log('You are enjoying walking with the tide hitting your feet');
+        new CoastLine().randomEvent();
         break;
       case Places.BEACH:
-        console.log('The sand on the beach is hot!');
+        new Beach().randomEvent();
         break;
-      default:
-        console.log(
-          'You better find land soon or you could be swimming for a while.',
-        );
+      case Places.DEEP_OCEAN:
+        new DeepOcean().randomEvent();
     }
     console.log(`[${this.x}, ${this.y}]`);
   }

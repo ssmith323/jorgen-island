@@ -1,3 +1,7 @@
+export default abstract class Die {
+  abstract roll(): number;
+}
+
 export type Roll =
   | 1
   | 2

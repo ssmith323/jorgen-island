@@ -1,7 +1,8 @@
 import { Alignment } from './attributes';
 import { canAttack } from './character-util';
+import Character from './character.interface';
 
-export default class Character {
+export default class PlayableCharacter implements Character {
   armor: number;
   hitPoints: number;
   constructor(public name: string, public alignment: Alignment) {
@@ -10,7 +11,7 @@ export default class Character {
     this.hitPoints = 5;
   }
 
-  attack(character: Character, attackRoll: number): void {
+  attack(character: PlayableCharacter, attackRoll: number): void {
     if (attackRoll === 20) {
       character.hitPoints -= 2;
       return;
